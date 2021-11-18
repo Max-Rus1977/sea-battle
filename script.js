@@ -4,25 +4,31 @@ const hangarShips = document.querySelector('.hangar-ships');
 
 const matrixBattleField = [];
 
-let shipDrag;
+let shipDrag; //@перетягиваемый корабль
 
-function getDragstartShip(event) {
+function startDragShip(event) {
   shipDrag = event.target;
   setTimeout(() => {
     shipDrag.classList.add('drag');
   }, 0);
 }
 
-function getDragendShip(event) {
+function endDragShip(event) {
   event.target.classList.remove('drag');
 }
+
+let prevTd; //@ предыдущая яйчейка 
 
 function shipOverField(event) {
   userField.classList.add('hover-user-field');
   if (event.target.dataset.x) {
     event.target.classList.add('hover-field-td');
   }
+  if (prevTd) {
+    prevTd.classList.remove('hover-field-td');
+  }
 
+  prevTd = event.target; //@ смена яйчейки 
   // console.log('event');
 }
 
@@ -32,7 +38,8 @@ function dropAllowed(event) {
 
 function dropShip(event) {
   userField.classList.remove('hover-user-field');
-  // console.log(event.target);
+  console.log(event.target);
+  event.target.classList.remove('hover-field-td');
   //console.log('$$$$$', event.target.dataset.x, event.target.dataset.y);
 
   /***заготовка для соприкасается ли каоабль с другим уже стоящим****/
@@ -53,8 +60,8 @@ function dropShip(event) {
 }
 
 ships.forEach(ship => {
-  ship.addEventListener('dragstart', getDragstartShip);
-  ship.addEventListener('dragend', getDragendShip);
+  ship.addEventListener('dragstart', startDragShip);
+  ship.addEventListener('dragend', endDragShip);
 })
 
 ships.forEach(ship => {
@@ -79,7 +86,7 @@ userField.addEventListener('dragover', dropAllowed);
 userField.addEventListener('drop', dropShip);
 
 
-// Матрица и поле боя
+// Поле боя
 const table = document.createElement("table");
 table.classList.add("battlefield-table");
 

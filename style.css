@@ -75,6 +75,24 @@ img {
   flex-wrap: wrap;
 }
 
+.btn {
+  display: block;
+  width: 255px;
+  height: 65px;
+  margin: 20px auto;
+  background-color: #34547A;
+  color: #fff;
+  font-size: 16px;
+  letter-spacing: 0.1em;
+  transition: 0.1s;
+}
+
+.btn:active {
+  transform: scale(0.99);
+  box-shadow: inset 0px 0px 18px 0px #fff;
+  border-radius: 3px;
+}
+
 .user-side {
   width: 50%;
 }
@@ -162,6 +180,10 @@ img {
 
 .hover-field-td {
   background-color: aqua;
+}
+
+.box-btn {
+  width: 100%;
 }
 
 .opponent-side {

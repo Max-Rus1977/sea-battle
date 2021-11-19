@@ -1,8 +1,48 @@
+// Поле боя
+const table = document.createElement("table");
+table.classList.add("battlefield-table");
+
+for (let y = 0; y < 10; y++) {
+  const tr = document.createElement("tr");
+  tr.dataset.y = y + 1;
+
+  for (let x = 0; x < 10; x++) {
+    const td = document.createElement("td");
+    td.classList.add("field-td");
+    td.dataset.x = x + 1;
+    td.dataset.y = y + 1;
+
+    tr.append(td);
+  }
+
+  table.append(tr);
+}
+
+// const td = document.querySelectorAll('td')
+
+// Матрица боя
+
+const btnStartBattle = document.querySelector('.btn');
+const battlefieldTable = document.querySelector('.battlefield-table');
+
+const matrixBattleField = [];
+
+function startBattleMatrix() {
+  for (let i = 0; i < 10; i++) {
+    matrixBattleField[i] = new Array;
+    for (let j = 0; j < 10; j++) {
+      matrixBattleField[i][j] = 1
+    }
+  }
+  console.log(matrixBattleField);
+}
+
+btnStartBattle.addEventListener('click', startBattleMatrix);
+/*! ---  !*/
+
 const ships = document.querySelectorAll('.ship');
 const userField = document.querySelector('.user-field');
 const hangarShips = document.querySelector('.hangar-ships');
-
-const matrixBattleField = [];
 
 let shipDrag; //@перетягиваемый корабль
 
@@ -11,6 +51,19 @@ function startDragShip(event) {
   setTimeout(() => {
     shipDrag.classList.add('drag');
   }, 0);
+  if (shipDrag.closest(".work") && shipDrag.classList.contains('reverce') && shipDrag.classList.contains('four-deck')) {
+    let cellShipRelocation = shipDrag.closest(".work");
+    cellShipRelocation.classList.remove('work');
+
+    let cellRelocationCoordinates = +cellShipRelocation.dataset.x;
+    let nexCell = cellShipRelocation.nextSibling;
+
+    for (let i = cellRelocationCoordinates; i < cellRelocationCoordinates + 3; i++) {
+      nexCell.classList.remove('work');
+      nexCell = nexCell.nextSibling;
+    }
+
+  }
 }
 
 function endDragShip(event) {
@@ -29,7 +82,7 @@ function shipOverField(event) {
   }
 
   prevTd = event.target; //@ смена яйчейки 
-  // console.log('event');
+  //console.log(prevTd);
 }
 
 function dropAllowed(event) {
@@ -38,25 +91,23 @@ function dropAllowed(event) {
 
 function dropShip(event) {
   userField.classList.remove('hover-user-field');
-  console.log(event.target);
-  event.target.classList.remove('hover-field-td');
-  //console.log('$$$$$', event.target.dataset.x, event.target.dataset.y);
+  //console.log(event.target);
+  let cellDropShip = event.target;
+  cellDropShip.classList.remove('hover-field-td');
 
-  /***заготовка для соприкасается ли каоабль с другим уже стоящим****/
-  // if (+event.target.dataset.x === 4, +event.target.dataset.y === 4) {
-  //   console.log('сработало');
-  //   hangarShips.append(shipDrag)
-  // }
-  /***заготовка для как расположен карабль при сбросе, горизонтально или вертикальео****/
-  // if (shipDrag.classList.contains('reverce')) {
-  //   console.log(1);
-  // }
-  // if (!shipDrag.classList.contains('reverce')) {
-  //   console.log(2);
-  // }
+  if (shipDrag.classList.contains('reverce') && shipDrag.classList.contains('four-deck')) {
+    cellDropShip.classList.add('work')
+
+    let a = +prevTd.dataset.x;
+    let nexCell = cellDropShip.nextSibling;
+
+    for (let i = a; i < a + 3; i++) {
+      nexCell.classList.add('work');
+      nexCell = nexCell.nextSibling;
+    }
+  }
 
   event.target.append(shipDrag);
-
 }
 
 ships.forEach(ship => {
@@ -84,26 +135,5 @@ ships.forEach(ship => {
 userField.addEventListener('dragenter', shipOverField);
 userField.addEventListener('dragover', dropAllowed);
 userField.addEventListener('drop', dropShip);
-
-
-// Поле боя
-const table = document.createElement("table");
-table.classList.add("battlefield-table");
-
-for (let y = 0; y < 10; y++) {
-  const tr = document.createElement("tr");
-  tr.dataset.y = y + 1;
-
-  for (let x = 0; x < 10; x++) {
-    const td = document.createElement("td");
-    td.classList.add("field-td");
-    td.dataset.x = x + 1;
-    td.dataset.y = y + 1;
-
-    tr.append(td);
-  }
-
-  table.append(tr);
-}
 
 userField.append(table);

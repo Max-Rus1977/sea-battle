@@ -135,17 +135,17 @@ img {
   height: 30px;
 }
 
-.reverce-four-deck {
+.reverse-four-deck {
   width: 120px;
   height: 30px;
 }
 
-.reverce-three-deck {
+.reverse-three-deck {
   width: 90px;
   height: 30px;
 }
 
-.reverce-two-deck {
+.reverse-two-deck {
   width: 60px;
   height: 30px;
 }
@@ -178,14 +178,22 @@ img {
   border: 1px solid rgba(6, 25, 247, 0.15);
 }
 
-.hover-field-td {
-  background-color: aqua;
-}
-
 .box-btn {
   width: 100%;
 }
 
 .opponent-side {
   width: 50%;
+}
+
+.blind-spot {
+  background-color: burlywood;
+}
+
+.deployment-ships {
+  background-color: blue;
+}
+
+.hover-field-td {
+  background-color: aqua;
 }

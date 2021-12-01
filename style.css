@@ -80,7 +80,7 @@ img {
   width: 255px;
   height: 65px;
   margin: 20px auto;
-  background-color: #34547A;
+  background-color: #6b7785;
   color: #fff;
   font-size: 16px;
   letter-spacing: 0.1em;
@@ -93,12 +93,20 @@ img {
   border-radius: 3px;
 }
 
+.user-side, .comp-side {
+  width: 40%;
+}
+
 .user-side {
-  width: 50%;
+  justify-content: flex-end;
 }
 
 .hangar-ships {
   transition: 0.5s;
+}
+
+.comp-side .hangar-ships {
+  margin-left: 20px;
 }
 
 .big-ships, .small-ships {
@@ -107,7 +115,8 @@ img {
 
 .ship {
   width: 30px;
-  border: 2px groove #000;
+  background-color: rgb(105 104 110 / 10%);
+  border: 2px groove #323883;
   cursor: move;
 }
 
@@ -117,6 +126,10 @@ img {
 
 .small-ships .ship+.ship {
   margin-top: 10px;
+}
+
+.comp-side .ship {
+  cursor: default;
 }
 
 .four-deck {
@@ -150,7 +163,7 @@ img {
   height: 30px;
 }
 
-.user-field {
+.user-field, .comp-field {
   position: relative;
   width: 326px;
   height: 326px;
@@ -175,15 +188,16 @@ img {
   position: relative;
   width: 30px;
   height: 30px;
-  border: 1px solid rgba(6, 25, 247, 0.15);
+  border: 1px solid rgb(35 70 197);
+  background-color: #f5f5f5;
+}
+
+.col-btn {
+  width: 20%;
 }
 
 .box-btn {
   width: 100%;
-}
-
-.opponent-side {
-  width: 50%;
 }
 
 .deployment-ships {
@@ -191,7 +205,7 @@ img {
 }
 
 .hover-field-td {
-  background-color: aqua;
+  background-color: rgb(0 0 255 / 58%);
 }
 
 .hit {

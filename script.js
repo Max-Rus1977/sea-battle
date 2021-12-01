@@ -25,6 +25,8 @@ compTable.classList.remove('user-table');
 compTable.classList.add('comp-table');
 compField.append(compTable);
 
+
+
 /* Drag and drop */
 const ships = document.querySelectorAll('.ship');
 const userField = document.querySelector('.user-field');
@@ -117,7 +119,6 @@ function dropAllowed(event) {
 //@ сброс корбля
 function dropShip(event) {
   userField.classList.remove('hover-user-field');
-  //console.log(event.target, 'яйчейка сброса корбля');
   let cellDropShip = event.target;
   cellDropShip.classList.remove('hover-field-td');
 
@@ -173,6 +174,8 @@ function dropShip(event) {
   if (shipDrag.classList.contains('one-deck')) {
     checkingLocationAndDropShip(shipDrag, 1, 10)
   }
+
+  cellDropShip.removeChild(cellDropShip.firstElementChild);
 
 }
 
@@ -318,7 +321,7 @@ function startRandom() {
 
 // Рандомная растановка comp и начало сражения
 function hitCheck(field, dataX, dataY) {
-
+  // console.log(field);
   field.querySelector(`[data-x="${dataX}"][data-y="${dataY}"]`).classList.remove('combat-ready-deck')
 
   let combatReadyDeckShip = 0;
@@ -455,11 +458,17 @@ function hitCheck(field, dataX, dataY) {
     let combatReadyDeck = field.querySelectorAll('.combat-ready-deck');
     if (combatReadyDeck.length === 0) {
       console.log('!!!finish!!!');
+      if (field === compField) {
+        compField.removeEventListener('click', userShot);
+      }
+      if (field === userField) {
+        return false;
+      }
     }
   }
 }
 
-function shot(event) {
+function userShot(event) {
   let cellShot = event.target;
   if (cellShot.classList.contains('deployment-ships')) {
     cellShot.classList.add('hit');
@@ -469,24 +478,28 @@ function shot(event) {
 
     hitCheck(compField, dataX, dataY);
   }
-  if (!cellShot.classList.contains('deployment-ships')) {
+  if (!cellShot.classList.contains('deployment-ships') && !cellShot.classList.contains('none-hit')) {
     cellShot.classList.add('none-hit');
+    compField.removeEventListener('click', userShot);
+    compShot();
   }
 }
 
-function computerRunning() {
+function compShot() {
   let dataY = randomNumbers(10);
   let dataX = randomNumbers(10);
 
   for (let i = 0; i < 2; i++) {
-    let cellShotComp = compField.querySelector(`[data-x="${dataX}"][data-y="${dataY}"]`);
+    let cellShotComp = userField.querySelector(`[data-x="${dataX}"][data-y="${dataY}"]`);
     if (!cellShotComp.classList.contains('none-hit') && !cellShotComp.classList.contains('hit')) {
       if (cellShotComp.classList.contains('deployment-ships')) {
         cellShotComp.classList.add('hit');
-        hitCheck(compField, dataX, dataY)
+        hitCheck(userField, dataX, dataY);
+        compShot();
       }
       if (!cellShotComp.classList.contains('deployment-ships')) {
         cellShotComp.classList.add('none-hit');
+        compField.addEventListener('click', userShot);
       }
       break;
     }
@@ -498,7 +511,7 @@ function computerRunning() {
 }
 
 const btnShot = document.querySelector('.btn__shot');
-btnShot.addEventListener('click', computerRunning)
+btnShot.addEventListener('click', compShot)
 
 function startBattle() {
   clearingField(compField);
@@ -515,8 +528,18 @@ function startBattle() {
     }
   })
 
-  // userField.addEventListener('click', shot)
-  compField.addEventListener('click', shot)
+  const bigShipsHangar = document.querySelector('.comp-side .big-ships');
+  const smallShipsHangar = document.querySelector('.comp-side .small-ships');
+  bigShipsHangar.innerHTML = '';
+  smallShipsHangar.innerHTML = '';
+
+  let headsHails = Math.floor(Math.random() * 2);
+  if (headsHails === 0) {
+    compShot();
+  }
+  if (headsHails === 1) {
+    compField.addEventListener('click', userShot)
+  }
 }
 
 const btnStartBattle = document.querySelector('.btn__battle');

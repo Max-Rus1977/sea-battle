@@ -144,6 +144,7 @@ function dropShip(event) {
   let countingShipsLaunch = userField.querySelectorAll('.deployment-ships');
   if (countingShipsLaunch.length === 20) {
     btnStartBattle.disabled = false;
+    btnStartBattle.classList.remove('btn-disabled');
   }
 }
 
@@ -284,6 +285,7 @@ function startRandom() {
   smallShipsHangar.innerHTML = '';
 
   btnStartBattle.disabled = false;
+  btnStartBattle.classList.remove('btn-disabled');
 }
 
 // Рандомная растановка comp и начало сражения
@@ -514,6 +516,8 @@ function startBattle() {
 
   btnRandom.disabled = true;
   btnStartBattle.disabled = true;
+  btnRandom.classList.add('btn-disabled');
+  btnStartBattle.classList.add('btn-disabled');
 }
 
 const btnStartBattle = document.querySelector('.btn__battle');

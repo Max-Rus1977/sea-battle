@@ -52,17 +52,51 @@
 //   }
 //   console.log(matrixBattleField);
 // }
-for (let i = 0; i < 4; i++) {
-  console.log(i * 1);
+// for (let i = 0; i < 4; i++) {
+//   console.log(i * 1);
+// }
+
+// if (field.querySelector(`[data-x="${dataX}"][data-y="${dataY + i * n}"]`) && field.querySelector(`[data-x="${dataX}"][data-y="${dataY + i * n}"]`).classList.contains('deployment-ships')) {
+//   if (field.querySelector(`[data-x="${dataX + 1}"][data-y="${dataY + i * n}"]`)) {
+//     field.querySelector(`[data-x="${dataX + 1}"][data-y="${dataY + i * n}"]`).classList.add('none-hit')
+//   }
+// }
+// if (field.querySelector(`[data-x="${dataX}"][data-y="${dataY + i * n}"]`) && field.querySelector(`[data-x="${dataX}"][data-y="${dataY + i * n}"]`).classList.contains('deployment-ships')) {
+//   if (field.querySelector(`[data-x="${dataX - 1}"][data-y="${dataY + i * n}"]`)) {
+//     field.querySelector(`[data-x="${dataX - 1}"][data-y="${dataY + i * n}"]`).classList.add('none-hit')
+//   }
+// }
+
+// Удаление классов коралбя
+function removeClassShipLocations(ship, n) {
+  let cellShipRelocation = ship.closest('.deployment-ships');
+  let dataX = +cellShipRelocation.dataset.x;
+  let dataY = +cellShipRelocation.dataset.y;
+
+  if (ship.classList.contains('reverse')) {
+    for (let i = 0; i < n; i++) {
+      userField.querySelector(`[data-x="${dataX + i}"][data-y="${dataY}"]`).className = 'field-td';
+    }
+  }
+  if (!ship.classList.contains('reverse')) {
+    for (let i = 0; i < n; i++) {
+      userField.querySelector(`[data-x="${dataX}"][data-y="${dataY + i}"]`).className = 'field-td';
+    }
+  }
 }
 
-if (field.querySelector(`[data-x="${dataX}"][data-y="${dataY + i * n}"]`) && field.querySelector(`[data-x="${dataX}"][data-y="${dataY + i * n}"]`).classList.contains('deployment-ships')) {
-  if (field.querySelector(`[data-x="${dataX + 1}"][data-y="${dataY + i * n}"]`)) {
-    field.querySelector(`[data-x="${dataX + 1}"][data-y="${dataY + i * n}"]`).classList.add('none-hit')
-  }
+if (shipDrag.closest(".deployment-ships") && shipDrag.classList.contains('four-deck')) {
+  removeClassShipLocations(shipDrag, 4)
 }
-if (field.querySelector(`[data-x="${dataX}"][data-y="${dataY + i * n}"]`) && field.querySelector(`[data-x="${dataX}"][data-y="${dataY + i * n}"]`).classList.contains('deployment-ships')) {
-  if (field.querySelector(`[data-x="${dataX - 1}"][data-y="${dataY + i * n}"]`)) {
-    field.querySelector(`[data-x="${dataX - 1}"][data-y="${dataY + i * n}"]`).classList.add('none-hit')
-  }
+
+if (shipDrag.closest(".deployment-ships") && shipDrag.classList.contains('three-deck')) {
+  removeClassShipLocations(shipDrag, 3)
+}
+
+if (shipDrag.closest(".deployment-ships") && shipDrag.classList.contains('two-deck')) {
+  removeClassShipLocations(shipDrag, 2)
+}
+
+if (shipDrag.closest(".deployment-ships") && shipDrag.classList.contains('one-deck')) {
+  removeClassShipLocations(shipDrag, 1)
 }

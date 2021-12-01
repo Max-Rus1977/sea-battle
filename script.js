@@ -25,8 +25,6 @@ compTable.classList.remove('user-table');
 compTable.classList.add('comp-table');
 compField.append(compTable);
 
-
-
 /* Drag and drop */
 const ships = document.querySelectorAll('.ship');
 const userField = document.querySelector('.user-field');
@@ -51,46 +49,12 @@ function addClassShipLocations(ship, n) {
   }
 }
 
-// Удаление классов коралбя
-function removeClassShipLocations(ship, n) {
-  let cellShipRelocation = ship.closest('.deployment-ships');
-  let dataX = +cellShipRelocation.dataset.x;
-  let dataY = +cellShipRelocation.dataset.y;
-
-  if (ship.classList.contains('reverse')) {
-    for (let i = 0; i < n; i++) {
-      userField.querySelector(`[data-x="${dataX + i}"][data-y="${dataY}"]`).className = 'field-td';
-    }
-  }
-  if (!ship.classList.contains('reverse')) {
-    for (let i = 0; i < n; i++) {
-      userField.querySelector(`[data-x="${dataX}"][data-y="${dataY + i}"]`).className = 'field-td';
-    }
-  }
-}
-
 // Начало перетягивания
 function startDragShip(event) {
   shipDrag = event.target;
   setTimeout(() => {
     shipDrag.classList.add('drag');
   }, 0);
-
-  if (shipDrag.closest(".deployment-ships") && shipDrag.classList.contains('four-deck')) {
-    removeClassShipLocations(shipDrag, 4)
-  }
-
-  if (shipDrag.closest(".deployment-ships") && shipDrag.classList.contains('three-deck')) {
-    removeClassShipLocations(shipDrag, 3)
-  }
-
-  if (shipDrag.closest(".deployment-ships") && shipDrag.classList.contains('two-deck')) {
-    removeClassShipLocations(shipDrag, 2)
-  }
-
-  if (shipDrag.closest(".deployment-ships") && shipDrag.classList.contains('one-deck')) {
-    removeClassShipLocations(shipDrag, 1)
-  }
 }
 
 function endDragShip(event) {
@@ -177,6 +141,10 @@ function dropShip(event) {
 
   cellDropShip.removeChild(cellDropShip.firstElementChild);
 
+  let countingShipsLaunch = userField.querySelectorAll('.deployment-ships');
+  if (countingShipsLaunch.length === 20) {
+    btnStartBattle.disabled = false;
+  }
 }
 
 ships.forEach(ship => {
@@ -191,17 +159,14 @@ ships.forEach(ship => {
     if (ship.classList.contains('four-deck')) {
       ship.classList.toggle('reverse-four-deck');
       ship.classList.toggle('reverse');
-      //turningShipField(ship, 4);
     }
     if (ship.classList.contains('three-deck')) {
       ship.classList.toggle('reverse-three-deck');
       ship.classList.toggle('reverse');
-      //turningShipField(ship, 3);
     }
     if (ship.classList.contains('two-deck')) {
       ship.classList.toggle('reverse-two-deck');
       ship.classList.toggle('reverse');
-      //turningShipField(ship, 2);
     }
   })
 })
@@ -317,6 +282,8 @@ function startRandom() {
   const smallShipsHangar = document.querySelector('.small-ships');
   bigShipsHangar.innerHTML = '';
   smallShipsHangar.innerHTML = '';
+
+  btnStartBattle.disabled = false;
 }
 
 // Рандомная растановка comp и начало сражения
@@ -510,8 +477,12 @@ function compShot() {
 
 }
 
-const btnShot = document.querySelector('.btn__shot');
-btnShot.addEventListener('click', compShot)
+function startOver() {
+  location.reload();
+}
+
+const btnShot = document.querySelector('.btn__start-over');
+btnShot.addEventListener('click', startOver)
 
 function startBattle() {
   clearingField(compField);
@@ -540,6 +511,9 @@ function startBattle() {
   if (headsHails === 1) {
     compField.addEventListener('click', userShot)
   }
+
+  btnRandom.disabled = true;
+  btnStartBattle.disabled = true;
 }
 
 const btnStartBattle = document.querySelector('.btn__battle');

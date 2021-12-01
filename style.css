@@ -186,14 +186,31 @@ img {
   width: 50%;
 }
 
-.blind-spot {
-  background-color: burlywood;
-}
-
 .deployment-ships {
   background-color: blue;
 }
 
 .hover-field-td {
   background-color: aqua;
+}
+
+.hit {
+  background-color: red;
+}
+
+.none-hit {
+  position: relative;
+}
+
+.none-hit:before {
+  content: '';
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: black;
+  border-radius: 50%;
+
 }

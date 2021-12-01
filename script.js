@@ -18,13 +18,14 @@ for (let y = 0; y < 10; y++) {
   userTable.append(tr);
 }
 
+/* Поле компьютера */
 const compField = document.querySelector('.comp-field');
 const compTable = userTable.cloneNode(true);
 compTable.classList.remove('user-table');
 compTable.classList.add('comp-table');
 compField.append(compTable);
-/*! ---  !*/
 
+/* Drag and drop */
 const ships = document.querySelectorAll('.ship');
 const userField = document.querySelector('.user-field');
 const hangarShips = document.querySelector('.hangar-ships');
@@ -37,51 +38,17 @@ function addClassShipLocations(ship, n) {
   let dataY = +prevTd.dataset.y;
 
   if (ship.classList.contains('reverse')) {
-
-    if (userField.querySelector(`[data-x="${dataX - 1}"][data-y="${dataY}"]`)) {
-      userField.querySelector(`[data-x="${dataX - 1}"][data-y="${dataY}"]`).classList.add('blind-spot');
-    }
-    if (userField.querySelector(`[data-x="${dataX + n}"][data-y="${dataY}"]`)) {
-      userField.querySelector(`[data-x="${dataX + n}"][data-y="${dataY}"]`).classList.add('blind-spot');
-    }
-    for (let i = -1; i <= n; i++) {
-      if (userField.querySelector(`[data-x="${dataX + i}"][data-y="${dataY + 1}"]`)) {
-        userField.querySelector(`[data-x="${dataX + i}"][data-y="${dataY + 1}"]`).classList.add('blind-spot');
-      }
-      if (userField.querySelector(`[data-x="${dataX + i}"][data-y="${dataY - 1}"]`)) {
-        userField.querySelector(`[data-x="${dataX + i}"][data-y="${dataY - 1}"]`).classList.add('blind-spot');
-      }
-    }
-
-    //корабль
     for (let i = 0; i < n; i++) {
-      userField.querySelector(`[data-x="${dataX + i}"][data-y="${dataY}"]`).classList.add('deployment-ships')
+      userField.querySelector(`[data-x="${dataX + i}"][data-y="${dataY}"]`).classList.add('deployment-ships', 'combat-ready-deck', 'horizontally')
     }
   }
-
   if (!ship.classList.contains('reverse')) {
-    if (userField.querySelector(`[data-x="${dataX}"][data-y="${dataY - 1}"]`)) {
-      userField.querySelector(`[data-x="${dataX}"][data-y="${dataY - 1}"]`).classList.add('blind-spot');
-    }
-    if (userField.querySelector(`[data-x="${dataX}"][data-y="${dataY + n}"]`)) {
-      userField.querySelector(`[data-x="${dataX}"][data-y="${dataY + n}"]`).classList.add('blind-spot');
-    }
-
-    for (let i = -1; i <= n; i++) {
-      if (userField.querySelector(`[data-x="${dataX + 1}"][data-y="${dataY + i}"]`)) {
-        userField.querySelector(`[data-x="${dataX + 1}"][data-y="${dataY + i}"]`).classList.add('blind-spot');
-      }
-      if (userField.querySelector(`[data-x="${dataX - 1}"][data-y="${dataY + i}"]`)) {
-        userField.querySelector(`[data-x="${dataX - 1}"][data-y="${dataY + i}"]`).classList.add('blind-spot');
-      }
-    }
-    //корабль
     for (let i = 0; i < n; i++) {
-      userField.querySelector(`[data-x="${dataX}"][data-y="${dataY + i}"]`).classList.add('deployment-ships');
+      userField.querySelector(`[data-x="${dataX}"][data-y="${dataY + i}"]`).classList.add('deployment-ships', 'combat-ready-deck', 'vertically');
     }
   }
-
 }
+
 // Удаление классов коралбя
 function removeClassShipLocations(ship, n) {
   let cellShipRelocation = ship.closest('.deployment-ships');
@@ -89,51 +56,18 @@ function removeClassShipLocations(ship, n) {
   let dataY = +cellShipRelocation.dataset.y;
 
   if (ship.classList.contains('reverse')) {
-
-    if (userField.querySelector(`[data-x="${dataX - 1}"][data-y="${dataY}"]`)) {
-      userField.querySelector(`[data-x="${dataX - 1}"][data-y="${dataY}"]`).classList.remove('blind-spot');
-    }
-    if (userField.querySelector(`[data-x="${dataX + n}"][data-y="${dataY}"]`)) {
-      userField.querySelector(`[data-x="${dataX + n}"][data-y="${dataY}"]`).classList.remove('blind-spot');
-    }
-    for (let i = -1; i <= n; i++) {
-      if (userField.querySelector(`[data-x="${dataX + i}"][data-y="${dataY + 1}"]`)) {
-        userField.querySelector(`[data-x="${dataX + i}"][data-y="${dataY + 1}"]`).classList.remove('blind-spot');
-      }
-      if (userField.querySelector(`[data-x="${dataX + i}"][data-y="${dataY - 1}"]`)) {
-        userField.querySelector(`[data-x="${dataX + i}"][data-y="${dataY - 1}"]`).classList.remove('blind-spot');
-      }
-    }
-
-    //корабль
     for (let i = 0; i < n; i++) {
-      userField.querySelector(`[data-x="${dataX + i}"][data-y="${dataY}"]`).classList.remove('deployment-ships')
+      userField.querySelector(`[data-x="${dataX + i}"][data-y="${dataY}"]`).className = 'field-td';
     }
   }
-
   if (!ship.classList.contains('reverse')) {
-    if (userField.querySelector(`[data-x="${dataX}"][data-y="${dataY - 1}"]`)) {
-      userField.querySelector(`[data-x="${dataX}"][data-y="${dataY - 1}"]`).classList.remove('blind-spot');
-    }
-    if (userField.querySelector(`[data-x="${dataX}"][data-y="${dataY + n}"]`)) {
-      userField.querySelector(`[data-x="${dataX}"][data-y="${dataY + n}"]`).classList.remove('blind-spot');
-    }
-
-    for (let i = -1; i <= n; i++) {
-      if (userField.querySelector(`[data-x="${dataX + 1}"][data-y="${dataY + i}"]`)) {
-        userField.querySelector(`[data-x="${dataX + 1}"][data-y="${dataY + i}"]`).classList.remove('blind-spot');
-      }
-      if (userField.querySelector(`[data-x="${dataX - 1}"][data-y="${dataY + i}"]`)) {
-        userField.querySelector(`[data-x="${dataX - 1}"][data-y="${dataY + i}"]`).classList.remove('blind-spot');
-      }
-    }
-    //корабль
     for (let i = 0; i < n; i++) {
-      userField.querySelector(`[data-x="${dataX}"][data-y="${dataY + i}"]`).classList.remove('deployment-ships');
+      userField.querySelector(`[data-x="${dataX}"][data-y="${dataY + i}"]`).className = 'field-td';
     }
   }
 }
 
+// Начало перетягивания
 function startDragShip(event) {
   shipDrag = event.target;
   setTimeout(() => {
@@ -187,27 +121,58 @@ function dropShip(event) {
   let cellDropShip = event.target;
   cellDropShip.classList.remove('hover-field-td');
 
-  if (cellDropShip.classList.contains('blind-spot') || cellDropShip.classList.contains('deployment-ships')) {
-    return false
+  let dataX = +cellDropShip.dataset.x;
+  let dataY = +cellDropShip.dataset.y;
+
+  function checkingLocationAndDropShip(shipDrag, deck, limiter) {
+    if (shipDrag.classList.contains('reverse')) {
+      for (let i = -1; i <= deck; i++) {
+        if (userField.querySelector(`[data-x="${dataX + i}"][data-y="${dataY - 1}"]`) && userField.querySelector(`[data-x="${dataX + i}"][data-y="${dataY - 1}"]`).classList.contains('deployment-ships')) {
+          return false;
+        }
+        if (userField.querySelector(`[data-x="${dataX + i}"][data-y="${dataY}"]`) && userField.querySelector(`[data-x="${dataX + i}"][data-y="${dataY}"]`).classList.contains('deployment-ships')) {
+          return false;
+        }
+        if (userField.querySelector(`[data-x="${dataX + i}"][data-y="${dataY + 1}"]`) && userField.querySelector(`[data-x="${dataX + i}"][data-y="${dataY + 1}"]`).classList.contains('deployment-ships')) {
+          return false;
+        }
+      }
+      if (dataX > limiter) {
+        return false;
+      }
+    }
+    if (!shipDrag.classList.contains('reverse')) {
+      for (let i = -1; i <= deck; i++) {
+        if (userField.querySelector(`[data-x="${dataX - 1}"][data-y="${dataY + i}"]`) && userField.querySelector(`[data-x="${dataX - 1}"][data-y="${dataY + i}"]`).classList.contains('deployment-ships')) {
+          return false;
+        }
+        if (userField.querySelector(`[data-x="${dataX}"][data-y="${dataY + i}"]`) && userField.querySelector(`[data-x="${dataX}"][data-y="${dataY + i}"]`).classList.contains('deployment-ships')) {
+          return false;
+        }
+        if (userField.querySelector(`[data-x="${dataX + 1}"][data-y="${dataY + i}"]`) && userField.querySelector(`[data-x="${dataX + 1}"][data-y="${dataY + i}"]`).classList.contains('deployment-ships')) {
+          return false;
+        }
+        if (dataY > limiter) {
+          return false;
+        }
+      }
+    }
+    cellDropShip.append(shipDrag);
+    addClassShipLocations(shipDrag, deck);
   }
 
   if (shipDrag.classList.contains('four-deck')) {
-    addClassShipLocations(shipDrag, 4);
+    checkingLocationAndDropShip(shipDrag, 4, 7)
   }
-
   if (shipDrag.classList.contains('three-deck')) {
-    addClassShipLocations(shipDrag, 3);
+    checkingLocationAndDropShip(shipDrag, 3, 8)
   }
-
   if (shipDrag.classList.contains('two-deck')) {
-    addClassShipLocations(shipDrag, 2);
+    checkingLocationAndDropShip(shipDrag, 2, 9)
   }
-
   if (shipDrag.classList.contains('one-deck')) {
-    addClassShipLocations(shipDrag, 1);
+    checkingLocationAndDropShip(shipDrag, 1, 10)
   }
-
-  event.target.append(shipDrag);
 
 }
 
@@ -246,39 +211,39 @@ userField.append(userTable);
 
 // Рандомная растановка
 const btnRandom = document.querySelector('.btn__random');
+
+function randomNumbers(max) {
+  return Math.floor((Math.random() * max) + 1)
+}
+
 function random(field, numberDecks, horizontallyY, horizontallyX, verticallyY, verticallyX, decks) {
 
   let horizontallyVertically = Math.floor(Math.random() * 2);
 
-  function randomNumbers(max) {
-    return Math.floor((Math.random() * max) + 1)
-  }
-
   if (horizontallyVertically === 0) {
 
     while (numberDecks > 0) {
-      fourDeckDataY = randomNumbers(horizontallyY);
-      fourDeckDataX = randomNumbers(horizontallyX);
+      let dataY = randomNumbers(horizontallyY);
+      let dataX = randomNumbers(horizontallyX);
 
       for (let i = -1; i <= decks; i++) {
-        console.log(fourDeckDataX + i);
-        if (field.querySelector(`[data-x="${fourDeckDataX + i}"][data-y="${fourDeckDataY - 1}"]`) && field.querySelector(`[data-x="${fourDeckDataX + i}"][data-y="${fourDeckDataY - 1}"]`).classList.contains('deployment-ships')) {
-          fourDeckDataY = randomNumbers(horizontallyY);
-          fourDeckDataX = randomNumbers(horizontallyX);
+        if (field.querySelector(`[data-x="${dataX + i}"][data-y="${dataY - 1}"]`) && field.querySelector(`[data-x="${dataX + i}"][data-y="${dataY - 1}"]`).classList.contains('deployment-ships')) {
+          dataY = randomNumbers(horizontallyY);
+          dataX = randomNumbers(horizontallyX);
           i = -2;
 
           continue;
         }
-        if (field.querySelector(`[data-x="${fourDeckDataX + i}"][data-y="${fourDeckDataY}"]`) && field.querySelector(`[data-x="${fourDeckDataX + i}"][data-y="${fourDeckDataY}"]`).classList.contains('deployment-ships')) {
-          fourDeckDataY = randomNumbers(horizontallyY);
-          fourDeckDataX = randomNumbers(horizontallyX);
+        if (field.querySelector(`[data-x="${dataX + i}"][data-y="${dataY}"]`) && field.querySelector(`[data-x="${dataX + i}"][data-y="${dataY}"]`).classList.contains('deployment-ships')) {
+          dataY = randomNumbers(horizontallyY);
+          dataX = randomNumbers(horizontallyX);
           i = -2;
 
           continue;
         }
-        if (field.querySelector(`[data-x="${fourDeckDataX + i}"][data-y="${fourDeckDataY + 1}"]`) && field.querySelector(`[data-x="${fourDeckDataX + i}"][data-y="${fourDeckDataY + 1}"]`).classList.contains('deployment-ships')) {
-          fourDeckDataY = randomNumbers(horizontallyY);
-          fourDeckDataX = randomNumbers(horizontallyX);
+        if (field.querySelector(`[data-x="${dataX + i}"][data-y="${dataY + 1}"]`) && field.querySelector(`[data-x="${dataX + i}"][data-y="${dataY + 1}"]`).classList.contains('deployment-ships')) {
+          dataY = randomNumbers(horizontallyY);
+          dataX = randomNumbers(horizontallyX);
           i = -2;
 
           continue;
@@ -286,7 +251,7 @@ function random(field, numberDecks, horizontallyY, horizontallyX, verticallyY, v
       }
 
       for (let i = 0; i < decks; i++) {
-        field.querySelector(`[data-x="${fourDeckDataX + i}"][data-y="${fourDeckDataY}"]`).classList.add('deployment-ships');
+        field.querySelector(`[data-x="${dataX + i}"][data-y="${dataY}"]`).classList.add('deployment-ships', 'combat-ready-deck', 'horizontally');
       }
       numberDecks--
     }
@@ -294,60 +259,264 @@ function random(field, numberDecks, horizontallyY, horizontallyX, verticallyY, v
 
   if (horizontallyVertically === 1) {
 
-    let fourDeckDataY = randomNumbers(verticallyY);
-    let fourDeckDataX = randomNumbers(verticallyX);
+    let dataY = randomNumbers(verticallyY);
+    let dataX = randomNumbers(verticallyX);
 
     while (numberDecks > 0) {
 
       for (let i = -1; i <= decks; i++) {
-        if (field.querySelector(`[data-x="${fourDeckDataX + 1}"][data-y="${fourDeckDataY + i}"]`) && field.querySelector(`[data-x="${fourDeckDataX + 1}"][data-y="${fourDeckDataY + i}"]`).classList.contains('deployment-ships')) {
-          fourDeckDataY = randomNumbers(horizontallyY);
-          fourDeckDataX = randomNumbers(horizontallyX);
+        if (field.querySelector(`[data-x="${dataX + 1}"][data-y="${dataY + i}"]`) && field.querySelector(`[data-x="${dataX + 1}"][data-y="${dataY + i}"]`).classList.contains('deployment-ships')) {
+          dataY = randomNumbers(verticallyY);
+          dataX = randomNumbers(verticallyX);
           i = -2;
 
           continue;
         }
-        if (field.querySelector(`[data-x="${fourDeckDataX}"][data-y="${fourDeckDataY + i}"]`) && field.querySelector(`[data-x="${fourDeckDataX}"][data-y="${fourDeckDataY + i}"]`).classList.contains('deployment-ships')) {
-          fourDeckDataY = randomNumbers(horizontallyY);
-          fourDeckDataX = randomNumbers(horizontallyX);
+        if (field.querySelector(`[data-x="${dataX}"][data-y="${dataY + i}"]`) && field.querySelector(`[data-x="${dataX}"][data-y="${dataY + i}"]`).classList.contains('deployment-ships')) {
+          dataY = randomNumbers(verticallyY);
+          dataX = randomNumbers(verticallyX);
           i = -2;
 
           continue;
         }
-        if (field.querySelector(`[data-x="${fourDeckDataX - 1}"][data-y="${fourDeckDataY + i}"]`) && field.querySelector(`[data-x="${fourDeckDataX - 1}"][data-y="${fourDeckDataY + i}"]`).classList.contains('deployment-ships')) {
-          fourDeckDataY = randomNumbers(horizontallyY);
-          fourDeckDataX = randomNumbers(horizontallyX);
+        if (field.querySelector(`[data-x="${dataX - 1}"][data-y="${dataY + i}"]`) && field.querySelector(`[data-x="${dataX - 1}"][data-y="${dataY + i}"]`).classList.contains('deployment-ships')) {
+          dataY = randomNumbers(verticallyY);
+          dataX = randomNumbers(verticallyX);
           i = -2;
 
           continue;
         }
       }
       for (let i = 0; i < decks; i++) {
-        field.querySelector(`[data-x="${fourDeckDataX}"][data-y="${fourDeckDataY + i}"]`).classList.add('deployment-ships');
+        field.querySelector(`[data-x="${dataX}"][data-y="${dataY + i}"]`).classList.add('deployment-ships', 'combat-ready-deck', 'vertically');
       }
       numberDecks--
     }
   }
 }
 
+// Рандомная растановка user
+
+function clearingField(field) {
+  const tdAllField = field.querySelectorAll('td');
+  tdAllField.forEach(td => td.className = 'field-td');
+}
+
 function startRandom() {
-  const userTdAll = userField.querySelectorAll('td');
-  userTdAll.forEach(td => td.classList.remove('deployment-ships'));
+  clearingField(userField);
 
   random(userField, 1, 10, 7, 7, 10, 4);
   random(userField, 2, 10, 8, 8, 10, 3);
   random(userField, 3, 10, 9, 9, 10, 2);
   random(userField, 4, 10, 10, 10, 10, 1);
+
+  const bigShipsHangar = document.querySelector('.big-ships');
+  const smallShipsHangar = document.querySelector('.small-ships');
+  bigShipsHangar.innerHTML = '';
+  smallShipsHangar.innerHTML = '';
 }
 
+// Рандомная растановка comp и начало сражения
+function hitCheck(field, dataX, dataY) {
+
+  field.querySelector(`[data-x="${dataX}"][data-y="${dataY}"]`).classList.remove('combat-ready-deck')
+
+  let combatReadyDeckShip = 0;
+
+  if (field.querySelector(`[data-x="${dataX}"][data-y="${dataY}"]`).classList.contains('horizontally')) {
+    for (let i = 1; i < 4; i++) {
+      if (field.querySelector(`[data-x="${dataX + i}"][data-y="${dataY}"]`) && field.querySelector(`[data-x="${dataX + i}"][data-y="${dataY}"]`).classList.contains('deployment-ships')) {
+        if (field.querySelector(`[data-x="${dataX + i}"][data-y="${dataY}"]`).classList.contains('combat-ready-deck')) {
+          combatReadyDeckShip++;
+        }
+      }
+      if (!field.querySelector(`[data-x="${dataX + i}"][data-y="${dataY}"]`)) {
+        break;
+      }
+      if (!field.querySelector(`[data-x="${dataX + i}"][data-y="${dataY}"]`).classList.contains('deployment-ships')) {
+        break;
+      }
+    }
+    for (let i = 1; i < 4; i++) {
+      if (field.querySelector(`[data-x="${dataX - i}"][data-y="${dataY}"]`) && field.querySelector(`[data-x="${dataX - i}"][data-y="${dataY}"]`).classList.contains('deployment-ships')) {
+        if (field.querySelector(`[data-x="${dataX - i}"][data-y="${dataY}"]`).classList.contains('combat-ready-deck')) {
+          combatReadyDeckShip++;
+        }
+      }
+      if (!field.querySelector(`[data-x="${dataX - i}"][data-y="${dataY}"]`)) {
+        break;
+      }
+      if (!field.querySelector(`[data-x="${dataX - i}"][data-y="${dataY}"]`).classList.contains('deployment-ships')) {
+        break;
+      }
+    }
+  }
+  if (field.querySelector(`[data-x="${dataX}"][data-y="${dataY}"]`).classList.contains('vertically')) {
+    for (let i = 1; i < 4; i++) {
+      if (field.querySelector(`[data-x="${dataX}"][data-y="${dataY + i}"]`) && field.querySelector(`[data-x="${dataX}"][data-y="${dataY + i}"]`).classList.contains('deployment-ships')) {
+        if (field.querySelector(`[data-x="${dataX}"][data-y="${dataY + i}"]`).classList.contains('combat-ready-deck')) {
+          combatReadyDeckShip++;
+        }
+      }
+      if (!field.querySelector(`[data-x="${dataX}"][data-y="${dataY + i}"]`)) {
+        break;
+      }
+      if (!field.querySelector(`[data-x="${dataX}"][data-y="${dataY + i}"]`).classList.contains('deployment-ships')) {
+        break;
+      }
+    }
+    for (let i = 1; i < 4; i++) {
+      if (field.querySelector(`[data-x="${dataX}"][data-y="${dataY - i}"]`) && field.querySelector(`[data-x="${dataX}"][data-y="${dataY - i}"]`).classList.contains('deployment-ships')) {
+        if (field.querySelector(`[data-x="${dataX}"][data-y="${dataY - i}"]`).classList.contains('combat-ready-deck')) {
+          combatReadyDeckShip++;
+        }
+      }
+      if (!field.querySelector(`[data-x="${dataX}"][data-y="${dataY - i}"]`)) {
+        break;
+      }
+      if (!field.querySelector(`[data-x="${dataX}"][data-y="${dataY - i}"]`).classList.contains('deployment-ships')) {
+        break;
+      }
+    }
+  }
+  if (combatReadyDeckShip > 0) {
+    console.log('ранил');
+  }
+  if (combatReadyDeckShip === 0) {
+    console.log('убил');
+
+    function verticalBlindSpot(field, dataX, dataY, n) {
+      for (let i = 0; i <= 4; i++) {
+        if (field.querySelector(`[data-x="${dataX}"][data-y="${dataY + i * n}"]`) && field.querySelector(`[data-x="${dataX}"][data-y="${dataY + i * n}"]`).classList.contains('deployment-ships')) {
+          if (field.querySelector(`[data-x="${dataX + 1}"][data-y="${dataY + i * n}"]`)) {
+            field.querySelector(`[data-x="${dataX + 1}"][data-y="${dataY + i * n}"]`).classList.add('none-hit')
+          }
+          if (field.querySelector(`[data-x="${dataX - 1}"][data-y="${dataY + i * n}"]`)) {
+            field.querySelector(`[data-x="${dataX - 1}"][data-y="${dataY + i * n}"]`).classList.add('none-hit')
+          }
+        }
+        if (!field.querySelector(`[data-x="${dataX}"][data-y="${dataY + i * n}"]`)) {
+          break;
+        }
+        if (!field.querySelector(`[data-x="${dataX}"][data-y="${dataY + i * n}"]`).classList.contains('deployment-ships')) {
+          if (field.querySelector(`[data-x="${dataX + 1}"][data-y="${dataY + i * n}"]`)) {
+            field.querySelector(`[data-x="${dataX + 1}"][data-y="${dataY + i * n}"]`).classList.add('none-hit')
+          }
+          if (field.querySelector(`[data-x="${dataX}"][data-y="${dataY + i * n}"]`)) {
+            field.querySelector(`[data-x="${dataX}"][data-y="${dataY + i * n}"]`).classList.add('none-hit')
+          }
+          if (field.querySelector(`[data-x="${dataX - 1}"][data-y="${dataY + i * n}"]`)) {
+            field.querySelector(`[data-x="${dataX - 1}"][data-y="${dataY + i * n}"]`).classList.add('none-hit')
+          }
+          break;
+        }
+      }
+    }
+
+    function horizontalBlindSpot(field, dataX, dataY, n) {
+      for (let i = 0; i <= 4; i++) {
+        if (field.querySelector(`[data-x="${dataX + i * n}"][data-y="${dataY}"]`) && field.querySelector(`[data-x="${dataX + i * n}"][data-y="${dataY}"]`).classList.contains('deployment-ships')) {
+          if (field.querySelector(`[data-x="${dataX + i * n}"][data-y="${dataY + 1}"]`)) {
+            field.querySelector(`[data-x="${dataX + i * n}"][data-y="${dataY + 1}"]`).classList.add('none-hit')
+          }
+          if (field.querySelector(`[data-x="${dataX + i * n}"][data-y="${dataY - 1}"]`)) {
+            field.querySelector(`[data-x="${dataX + i * n}"][data-y="${dataY - 1}"]`).classList.add('none-hit')
+          }
+        }
+        if (!field.querySelector(`[data-x="${dataX + i * n}"][data-y="${dataY}"]`)) {
+          break;
+        }
+        if (!field.querySelector(`[data-x="${dataX + i * n}"][data-y="${dataY}"]`).classList.contains('deployment-ships')) {
+          if (field.querySelector(`[data-x="${dataX + i * n}"][data-y="${dataY + 1}"]`)) {
+            field.querySelector(`[data-x="${dataX + i * n}"][data-y="${dataY + 1}"]`).classList.add('none-hit')
+          }
+          if (field.querySelector(`[data-x="${dataX + i * n}"][data-y="${dataY}"]`)) {
+            field.querySelector(`[data-x="${dataX + i * n}"][data-y="${dataY}"]`).classList.add('none-hit')
+          }
+          if (field.querySelector(`[data-x="${dataX + i * n}"][data-y="${dataY - 1}"]`)) {
+            field.querySelector(`[data-x="${dataX + i * n}"][data-y="${dataY - 1}"]`).classList.add('none-hit')
+          }
+          break;
+        }
+      }
+    }
+
+    if (field === compField) {
+      if (field.querySelector(`[data-x="${dataX}"][data-y="${dataY}"]`).classList.contains('vertically')) {
+        verticalBlindSpot(field, dataX, dataY, 1);
+        verticalBlindSpot(field, dataX, dataY, -1);
+      }
+      if (field.querySelector(`[data-x="${dataX}"][data-y="${dataY}"]`).classList.contains('horizontally')) {
+        horizontalBlindSpot(field, dataX, dataY, 1);
+        horizontalBlindSpot(field, dataX, dataY, -1);
+      }
+    }
+
+    let combatReadyDeck = field.querySelectorAll('.combat-ready-deck');
+    if (combatReadyDeck.length === 0) {
+      console.log('!!!finish!!!');
+    }
+  }
+}
+
+function shot(event) {
+  let cellShot = event.target;
+  if (cellShot.classList.contains('deployment-ships')) {
+    cellShot.classList.add('hit');
+
+    let dataX = +cellShot.dataset.x;
+    let dataY = +cellShot.dataset.y;
+
+    hitCheck(compField, dataX, dataY);
+  }
+  if (!cellShot.classList.contains('deployment-ships')) {
+    cellShot.classList.add('none-hit');
+  }
+}
+
+function computerRunning() {
+  let dataY = randomNumbers(10);
+  let dataX = randomNumbers(10);
+
+  for (let i = 0; i < 2; i++) {
+    let cellShotComp = compField.querySelector(`[data-x="${dataX}"][data-y="${dataY}"]`);
+    if (!cellShotComp.classList.contains('none-hit') && !cellShotComp.classList.contains('hit')) {
+      if (cellShotComp.classList.contains('deployment-ships')) {
+        cellShotComp.classList.add('hit');
+        hitCheck(compField, dataX, dataY)
+      }
+      if (!cellShotComp.classList.contains('deployment-ships')) {
+        cellShotComp.classList.add('none-hit');
+      }
+      break;
+    }
+    dataY = randomNumbers(10);
+    dataX = randomNumbers(10);
+    i = 0;
+  }
+
+}
+
+const btnShot = document.querySelector('.btn__shot');
+btnShot.addEventListener('click', computerRunning)
+
 function startBattle() {
-  const compTdAll = compField.querySelectorAll('td');
-  compTdAll.forEach(td => td.classList.remove('deployment-ships'));
+  clearingField(compField);
 
   random(compField, 1, 10, 7, 7, 10, 4);
   random(compField, 2, 10, 8, 8, 10, 3);
   random(compField, 3, 10, 9, 9, 10, 2);
   random(compField, 4, 10, 10, 10, 10, 1);
+
+  const userTdAll = userField.querySelectorAll('td');
+  userTdAll.forEach(td => {
+    if (td.firstElementChild) {
+      td.removeChild(td.firstElementChild)
+    }
+  })
+
+  // userField.addEventListener('click', shot)
+  compField.addEventListener('click', shot)
 }
 
 const btnStartBattle = document.querySelector('.btn__battle');

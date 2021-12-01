@@ -52,3 +52,17 @@
 //   }
 //   console.log(matrixBattleField);
 // }
+for (let i = 0; i < 4; i++) {
+  console.log(i * 1);
+}
+
+if (field.querySelector(`[data-x="${dataX}"][data-y="${dataY + i * n}"]`) && field.querySelector(`[data-x="${dataX}"][data-y="${dataY + i * n}"]`).classList.contains('deployment-ships')) {
+  if (field.querySelector(`[data-x="${dataX + 1}"][data-y="${dataY + i * n}"]`)) {
+    field.querySelector(`[data-x="${dataX + 1}"][data-y="${dataY + i * n}"]`).classList.add('none-hit')
+  }
+}
+if (field.querySelector(`[data-x="${dataX}"][data-y="${dataY + i * n}"]`) && field.querySelector(`[data-x="${dataX}"][data-y="${dataY + i * n}"]`).classList.contains('deployment-ships')) {
+  if (field.querySelector(`[data-x="${dataX - 1}"][data-y="${dataY + i * n}"]`)) {
+    field.querySelector(`[data-x="${dataX - 1}"][data-y="${dataY + i * n}"]`).classList.add('none-hit')
+  }
+}
